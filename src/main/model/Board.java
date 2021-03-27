@@ -64,10 +64,14 @@ public class Board {
         }
         switch (orientation){
             case HORIZONTAL:{
-
+                for(int i = 0; i < ship.getLength(); i++){
+                    ships[row][col+i] = ship.getId();
+                }
             }
             case VERTICAL:{
-
+                for(int i = 0; i < ship.getLength(); i++){
+                    ships[row+i][col] = ship.getId();
+                }
             }
         }
     }
