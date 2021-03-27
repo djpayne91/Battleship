@@ -92,6 +92,7 @@ public class Board {
                 return col+length <= ships[0].length;
             }
             default:{
+                // cant reach this with coverage, but its good practice.
                 return false;
             }
         }

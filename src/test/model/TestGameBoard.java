@@ -44,33 +44,34 @@ public class TestGameBoard {
     @Test
     public void placeShipHorizontalInvalidShouldThrowException(){
         Board SUT = new Board(6,6);
-        Ship shipStub = new ShipStub(3, 3);
+        Ship ship = new Ship(3, 3);
         assertThrows(IllegalArgumentException.class, ()->{
-            SUT.placeShip(shipStub, 4,5, Orientation.HORIZONTAL);
+            SUT.placeShip(ship, 4,5, Orientation.HORIZONTAL);
         });
     }
 
     @Test
     public void placeShipVerticalInvalidShouldThrowException(){
         Board SUT = new Board(6,6);
-        Ship shipStub = new ShipStub(3, 3);
+        Ship ship = new Ship(3, 3);
         assertThrows(IllegalArgumentException.class, ()->{
-            SUT.placeShip(shipStub, 5,4, Orientation.VERTICAL);
+            SUT.placeShip(ship, 5,4, Orientation.VERTICAL);
+        });
+    }
+
+    @Test
+    public void placeShipOutsideBoundsShouldThrowException(){
+        Board SUT = new Board(6,6);
+        Ship ship = new Ship(3,3);
+        assertThrows(IllegalArgumentException.class, ()->{
+           SUT.placeShip(ship, -1, -1, Orientation.HORIZONTAL);
         });
     }
     @Test
     public void shootAtShipShouldReturnShipId(){
         Board SUT = new Board(6,6);
-        Ship shipStub = new ShipStub(3,3);
-        SUT.placeShip(shipStub, 0,1, Orientation.HORIZONTAL);
+        Ship ship = new Ship(3,3);
+        SUT.placeShip(ship, 0,1, Orientation.HORIZONTAL);
         assertEquals(3, SUT.shoot(1,1));
-    }
-
-    static class ShipStub extends Ship{
-
-        public ShipStub(int id, int length) {
-            super(id, length);
-        }
-
     }
 }
