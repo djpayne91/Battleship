@@ -1,0 +1,105 @@
+package main.model;
+
+import com.sun.javafx.sg.prism.GrowableDataBuffer;
+import sun.plugin.dom.exception.BrowserNotSupportedException;
+
+import java.util.Arrays;
+
+/**
+ * Class representing a player's board. It will represent the locations of the player's ships, and the locations where shots have already been taken.
+ * To clarify: the opposing player will take shots at this board.
+ */
+public class Board {
+
+    public static final int EMPTY_SQUARE = Integer.MAX_VALUE;
+
+    private int[][] ships;
+    private boolean[][] shots;
+
+    /**
+     * Constructor for Board class. Requires a desired width and height for the game board. Fills the new board with empty squares.
+     *
+     * @throws RuntimeException if width or height is below 6
+     * @param width Desired width.
+     * @param height Desired height.
+     */
+    public Board(int width, int height) {
+        if(width < 6 || height < 6){
+            throw new IllegalArgumentException("Game board must be at least 6 squares wide and 6 squares high");
+        }
+        this.ships = new int[height][width];
+        this.shots = new boolean[height][width];
+        // fill ships array with empty square id
+        for(int[] row : ships){
+            Arrays.fill(row, EMPTY_SQUARE);
+        }
+    }
+
+
+    /**
+     * Takes shot at specified column and row. Returns <code>Board.EMPTY_SQUARE</code> if no ship is present at that location.
+     * Throws a runtime exception if the square has been shot already or if shot is outside the bounds of the board.
+     * @throws RuntimeException If the column and row are outside of the board.
+     * @throws RuntimeException If the given location has already been hit.
+     * @param col Column of square to shoot.
+     * @param row Row of square to shoot.
+     * @return ID of ship at location. Returns <code>Board.EMPTY_SQUARE</code> if no ship is present at that location.
+     */
+    public int shoot(int col, int row){
+        // check shot is valid
+        if(!shotIsValid(col, row)){
+            throw new IllegalArgumentException("The shot must be within the bounds of the board");
+        }
+        if(!shots[row][col]){
+            shots[row][col] = true;
+            return ships[row][col];
+        } else {
+            throw new IllegalArgumentException("This square has been already");
+        }
+    }
+
+    public void placeShip(Ship ship, int col, int row, Orientation orientation){
+        if(!placementIsValid(ship, col, row, orientation)){
+            throw new IllegalArgumentException("Ship placement is invalid");
+        }
+        switch (orientation){
+            case HORIZONTAL:{
+
+            }
+            case VERTICAL:{
+
+            }
+        }
+    }
+
+    /**
+     * Private helper function to check ship will fit in location with orientation.
+     */
+    private boolean placementIsValid(Ship ship, int col, int row, Orientation orientation){
+        int length = ship.getLength();
+        if(col < 0 || row < 0){
+            return false;
+        }
+        switch (orientation){
+            case VERTICAL:{
+                return row+length <= ships.length;
+            }
+            case HORIZONTAL:{
+                return col+length <= ships[0].length;
+            }
+            default:{
+                return false;
+            }
+        }
+    }
+
+    private boolean shotIsValid(int col, int row){
+        // check it is not negative
+        if(col < 0 || row < 0){
+            return false;
+        }
+        // check it isn't out of bounds
+        return col <= ships[0].length && row <= ships.length;
+    }
+
+}
