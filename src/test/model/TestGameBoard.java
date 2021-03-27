@@ -2,6 +2,7 @@ package test.model;
 import main.model.Board;
 import main.model.Orientation;
 import main.model.Ship;
+import main.model.ShipType;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -29,7 +30,7 @@ public class TestGameBoard {
     @Test
     public void shootEmptySquareShouldReturnEMPTY_SQUARE(){
         Board SUT = new Board(8,8);
-        assertEquals(SUT.shoot(4,4), Board.EMPTY_SQUARE);
+        assertEquals(SUT.shoot(4,4), ShipType.EMPTY_SQUARE);
     }
 
     @Test
@@ -44,7 +45,7 @@ public class TestGameBoard {
     @Test
     public void placeShipHorizontalInvalidShouldThrowException(){
         Board SUT = new Board(6,6);
-        Ship ship = new Ship(3, 3);
+        Ship ship = new Ship(ShipType.BATTLESHIP, 3);
         assertThrows(IllegalArgumentException.class, ()->{
             SUT.placeShip(ship, 4,5, Orientation.HORIZONTAL);
         });
@@ -53,7 +54,7 @@ public class TestGameBoard {
     @Test
     public void placeShipVerticalInvalidShouldThrowException(){
         Board SUT = new Board(6,6);
-        Ship ship = new Ship(3, 3);
+        Ship ship = new Ship(ShipType.BATTLESHIP, 3);
         assertThrows(IllegalArgumentException.class, ()->{
             SUT.placeShip(ship, 5,4, Orientation.VERTICAL);
         });
@@ -62,7 +63,7 @@ public class TestGameBoard {
     @Test
     public void placeShipOutsideBoundsShouldThrowException(){
         Board SUT = new Board(6,6);
-        Ship ship = new Ship(3,3);
+        Ship ship = new Ship(ShipType.BATTLESHIP,3);
         assertThrows(IllegalArgumentException.class, ()->{
            SUT.placeShip(ship, -1, -1, Orientation.HORIZONTAL);
         });
@@ -70,8 +71,8 @@ public class TestGameBoard {
     @Test
     public void shootAtShipShouldReturnShipId(){
         Board SUT = new Board(6,6);
-        Ship ship = new Ship(3,3);
+        Ship ship = new Ship(ShipType.BATTLESHIP,3);
         SUT.placeShip(ship, 0,1, Orientation.HORIZONTAL);
-        assertEquals(3, SUT.shoot(1,1));
+        assertEquals(ShipType.BATTLESHIP, SUT.shoot(1,1));
     }
 }

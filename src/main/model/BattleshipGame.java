@@ -36,4 +36,14 @@ public class BattleshipGame {
     public Player getPlayerTwo() {
         return playerTwo;
     }
+
+    /**
+     * Method for checking if game is over and getting the winner. Returns null if game should keep going.
+     * @return Winner of game. Null if game must continue.
+     */
+    public Player getWinner(){
+        if(playerOne.isFleetDestroyed()) return playerTwo;
+        if(playerTwo.isFleetDestroyed()) return playerOne;
+        return null;
+    }
 }

@@ -5,7 +5,7 @@ package main.model;
  */
 public class Ship {
 
-    private int id;
+    private ShipType id;
     private int length;
     private int HP;
 
@@ -15,7 +15,7 @@ public class Ship {
      * @param id int ID of this Ship.
      * @param length length of Ship.
      */
-    public Ship(int id, int length) {
+    public Ship(ShipType id, int length) {
         this.id = id;
         this.length = length;
         this.HP = length;
@@ -25,7 +25,7 @@ public class Ship {
      * Public getter for this ship's ID.
      * @return id
      */
-    public int getId() {
+    public ShipType getId() {
         return id;
     }
     /**

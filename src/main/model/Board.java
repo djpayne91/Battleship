@@ -1,8 +1,5 @@
 package main.model;
 
-import com.sun.javafx.sg.prism.GrowableDataBuffer;
-import sun.plugin.dom.exception.BrowserNotSupportedException;
-
 import java.util.Arrays;
 
 /**
@@ -11,9 +8,7 @@ import java.util.Arrays;
  */
 public class Board {
 
-    public static final int EMPTY_SQUARE = Integer.MAX_VALUE;
-
-    private int[][] ships;
+    private ShipType[][] ships;
     private boolean[][] shots;
 
     /**
@@ -27,11 +22,11 @@ public class Board {
         if(width < 6 || height < 6){
             throw new IllegalArgumentException("Game board must be at least 6 squares wide and 6 squares high");
         }
-        this.ships = new int[height][width];
+        this.ships = new ShipType[height][width];
         this.shots = new boolean[height][width];
         // fill ships array with empty square id
-        for(int[] row : ships){
-            Arrays.fill(row, EMPTY_SQUARE);
+        for(ShipType[] row : ships){
+            Arrays.fill(row, ShipType.EMPTY_SQUARE);
         }
     }
 
@@ -45,7 +40,7 @@ public class Board {
      * @param row Row of square to shoot.
      * @return ID of ship at location. Returns <code>Board.EMPTY_SQUARE</code> if no ship is present at that location.
      */
-    public int shoot(int col, int row){
+    public ShipType shoot(int col, int row){
         // check shot is valid
         if(!shotIsValid(col, row)){
             throw new IllegalArgumentException("The shot must be within the bounds of the board");

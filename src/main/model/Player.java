@@ -19,6 +19,7 @@ public class Player {
      * @param ships List of ships for the player.
      * @param board Bord for player.
      */
+
     public Player(List<Ship> ships, Board board) {
         this.ships = Objects.requireNonNull(ships);
         this.board = Objects.requireNonNull(board);
@@ -40,7 +41,7 @@ public class Player {
      * @param shipId Id of ship to find.
      * @return Ship that matches given ID.
      */
-    public Ship getShip(int shipId) {
+    public Ship getShip(ShipType shipId) {
         for (Ship ship : ships) {
             if (ship.getId() == shipId) {
                 return ship;
