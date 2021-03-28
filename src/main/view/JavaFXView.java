@@ -1,10 +1,14 @@
 package main.view;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import main.GameController;
 
 import java.io.IOException;
@@ -17,10 +21,7 @@ public class JavaFXView extends Application implements View {
     private static final int WIDTH = 1000;
     private static final int HEIGHT = 600;
 
-    private static Scene mainMenuScene;
-    private static Scene gameOptionsScene;
-
-    private Stage stage;
+    private static Stage window;
 
     private GameController controller = new GameController();
 
@@ -30,25 +31,22 @@ public class JavaFXView extends Application implements View {
      */
     @Override
     public void start(Stage primaryStage) {
-        stage = primaryStage;
-
+        window = primaryStage;
         // initialize scenes so we don't have to initialize on the fly as we switch around.
         // Treat this like a state machine and we're just setting up the states now. Runtime will only handle transitioning.
         // set up initial settings
-        loadScenes();
-
-        stage.setTitle("Battleship");
-        stage.setWidth(WIDTH);
-        stage.setHeight(HEIGHT);
-        stage.setResizable(false);
-        stage.centerOnScreen();
-        stage.show();
-        showMainMenu();
+        window.setTitle("Battleship");
+        window.setWidth(WIDTH);
+        window.setHeight(HEIGHT);
+        window.setResizable(false);
+        window.centerOnScreen();
+        window.show();
+        showMainMenu(null);
     }
 
     /**
-     * Show view to user.
-     * @param args
+     * Show view to user. Starting point for view interface.
+     * @param args application args
      */
     @Override
     public void show(String[] args) {
@@ -58,15 +56,28 @@ public class JavaFXView extends Application implements View {
     /**
      * Switches view to main menu.
      */
-    public void showMainMenu(){
-
+    @FXML
+    public void showMainMenu(ActionEvent event){
+        try {
+            Scene newScene = loadScene("/main/res/fxml/MainMenu.fxml");
+            window.setScene(newScene);
+        } catch (IOException e) {
+            System.err.println("Unable to load Main Menu");
+            e.printStackTrace();
+        }
     }
 
     /**
      * Switches view to game options menu to start a new game
      */
-    public void showGameOptionsMenu(){
-
+    @FXML
+    public void showNewGameMenu(ActionEvent event){
+        try {
+            window.setScene(loadScene("/main/res/fxml/NewGameMenu.fxml"));
+        } catch (IOException e) {
+            System.err.println("Unable to load New Game Menu");
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -82,22 +93,20 @@ public class JavaFXView extends Application implements View {
     public void showGameOverScreen(){
 
     }
-
-    public void exitGame(){
-        stage.close();
+    @FXML
+    public void exitGame(ActionEvent event){
+        window.close();
     }
 
-
-    private void loadScenes() {
-        // TODO load scenes here so we don't have to during runtime.
-        Parent root;
-        try {
-            root = FXMLLoader.load(getClass().getResource("/main/res/fxml/MainMenu.fxml"));
-            mainMenuScene = new Scene(root);
-        } catch (IOException e){
-            e.printStackTrace();
-            throw new RuntimeException(e.getMessage());
-        }
+    /**
+     * Helper method to load scenes from fxml
+     * @param filePath path to file for scene to load
+     * @return loaded scene
+     * @throws IOException if there's an io issue
+     */
+    private Scene loadScene(String filePath) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource(filePath));
+        return new Scene(root);
     }
 
 }

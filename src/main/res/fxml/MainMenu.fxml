@@ -9,8 +9,8 @@
       prefWidth="600.0" styleClass="menuBox" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="main.view.JavaFXView">
    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="titleText" text="Battleship!"/>
-   <Button mnemonicParsing="false" styleClass="menuButton" text="New Game"/>
-   <Button mnemonicParsing="false" styleClass="menuButton" text="Quit"/>
+   <Button mnemonicParsing="false" styleClass="menuButton" text="New Game" onAction="#showNewGameMenu"/>
+   <Button mnemonicParsing="false" styleClass="menuButton" text="Quit" onAction="#exitGame"/>
    <stylesheets>
       <URL value="@../css/style.css"/>
    </stylesheets>
