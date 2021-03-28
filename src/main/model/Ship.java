@@ -3,12 +3,11 @@ package main.model;
 /**
  * Class representing a player's ship. It has an ID, a length, and a number of hit points determined by the length.
  */
-public class Ship {
+public class Ship implements Cloneable{
 
     private ShipType id;
     private int length;
     private int HP;
-
 
     /**
      * Public constructor for Ship class. Requires an ID and a ship length. Length of the ship will determine its HP.
@@ -43,11 +42,28 @@ public class Ship {
         return HP;
     }
 
+    /**
+     * Hit this ship. Decreases HP by 1;
+     */
     public void hit(){
         HP--;
     }
 
+    /**
+     * Returns whether or not the ship has been sunk.
+     * @return true if HP is zero or below. false otherwise.
+     */
     public boolean isSunk(){
         return HP <= 0;
+    }
+
+    /**
+     * Returns a new copy of this ship.
+     * @return
+     * @throws CloneNotSupportedException
+     */
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+       return super.clone();
     }
 }

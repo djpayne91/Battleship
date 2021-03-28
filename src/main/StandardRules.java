@@ -42,8 +42,16 @@ public class StandardRules implements GameRules {
 
     @Override
     public List<Ship> getShipList() {
-        List<Ship> out = new ArrayList<>();
-        Collections.copy(out, ships);
-        return out;
+        // TODO implement deep copy of ship list.
+        try {
+            ArrayList<Ship> out = new ArrayList<>();
+            for (Ship s : ships) {
+                out.add((Ship) s.clone());
+            }
+            return out;
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e.getMessage());
+        }
     }
 }

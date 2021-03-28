@@ -49,7 +49,7 @@ public class Board {
             shots[row][col] = true;
             return ships[row][col];
         } else {
-            throw new IllegalArgumentException("This square has been already");
+            throw new IllegalArgumentException("This square has been shot already");
         }
     }
 
