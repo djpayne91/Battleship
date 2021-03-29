@@ -10,8 +10,8 @@ import java.util.Objects;
  */
 public class Player {
 
-    private List<Ship> ships;
-    private Board board;
+    private final List<Ship> ships;
+    private final Board board;
 
     /**
      * Constructor for Player class. Ships and Board must not be null.
@@ -72,6 +72,7 @@ public class Player {
      * @return Number of remaining ships.
      */
     public int getShipsAlive(){
+        // TODO
         return 0;
     }
 

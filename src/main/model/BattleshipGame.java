@@ -1,7 +1,5 @@
 package main.model;
 
-import java.util.Objects;
-
 /**
  * Class representing the state of a game of Battleship. It has two players, each with their own board. The game is over
  * when one player destroys all of the other player's ships.
@@ -12,13 +10,19 @@ public class BattleshipGame {
     private Player playerTwo;
 
     /**
-     * Constructor for BattleshipGame class. Both <code>Player</code>s must be non-null.
-     * @param playerOne Player one.
-     * @param playerTwo Player two.
+     * Public setter for player one.
+     * @param playerOne player one
      */
-    public BattleshipGame(Player playerOne, Player playerTwo) {
-        this.playerOne = Objects.requireNonNull(playerOne);
-        this.playerTwo = Objects.requireNonNull(playerTwo);
+    public void setPlayerOne(Player playerOne) {
+        this.playerOne = playerOne;
+    }
+
+    /**
+     * Public setter for player two.
+     * @param playerTwo player two
+     */
+    public void setPlayerTwo(Player playerTwo) {
+        this.playerTwo = playerTwo;
     }
 
     /**
@@ -31,7 +35,7 @@ public class BattleshipGame {
 
     /**
      * Public getter for Player Two of this game.
-     * @return
+     * @return player two
      */
     public Player getPlayerTwo() {
         return playerTwo;

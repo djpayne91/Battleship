@@ -15,9 +15,6 @@ import java.io.IOException;
 public class MainMenuController {
     private Stage primaryStage;
 
-    public MainMenuController(){
-    }
-
     public void setPrimaryStage(Stage primaryStage) {
         this.primaryStage = primaryStage;
     }

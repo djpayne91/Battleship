@@ -12,12 +12,8 @@ public class TestGameBoard {
     @Test
     public void shootOutsideBoundsShouldThrowException(){
         Board SUT = new Board(8,8);
-        assertThrows(IllegalArgumentException.class, ()->{
-           SUT.shoot(9,9);
-        });
-        assertThrows(IllegalArgumentException.class, ()->{
-            SUT.shoot(-1,-1);
-        });
+        assertThrows(IllegalArgumentException.class, ()-> SUT.shoot(9, 9));
+        assertThrows(IllegalArgumentException.class, ()-> SUT.shoot(-1, -1));
     }
 
     @Test
@@ -30,49 +26,41 @@ public class TestGameBoard {
     @Test
     public void shootEmptySquareShouldReturnEMPTY_SQUARE(){
         Board SUT = new Board(8,8);
-        assertEquals(SUT.shoot(4,4), ShipType.EMPTY_SQUARE);
+        assertEquals(SUT.shoot(4, 4), ShipType.EMPTY_SQUARE);
     }
 
     @Test
     public void shootSquareTwiceShouldThrowException(){
         Board SUT = new Board(8,8);
-        SUT.shoot(4,4);
-        assertThrows(IllegalArgumentException.class, ()->{
-            SUT.shoot(4,4);
-        });
+        SUT.shoot(4, 4);
+        assertThrows(IllegalArgumentException.class, ()-> SUT.shoot(4, 4));
     }
 
     @Test
     public void placeShipHorizontalInvalidShouldThrowException(){
         Board SUT = new Board(6,6);
         Ship ship = new Ship(ShipType.BATTLESHIP, 3);
-        assertThrows(IllegalArgumentException.class, ()->{
-            SUT.placeShip(ship, 4,5, Orientation.HORIZONTAL);
-        });
+        assertThrows(IllegalArgumentException.class, ()-> SUT.placeShip(ship, 5, 4, Orientation.HORIZONTAL));
     }
 
     @Test
     public void placeShipVerticalInvalidShouldThrowException(){
         Board SUT = new Board(6,6);
         Ship ship = new Ship(ShipType.BATTLESHIP, 3);
-        assertThrows(IllegalArgumentException.class, ()->{
-            SUT.placeShip(ship, 5,4, Orientation.VERTICAL);
-        });
+        assertThrows(IllegalArgumentException.class, ()-> SUT.placeShip(ship, 4, 5, Orientation.VERTICAL));
     }
 
     @Test
     public void placeShipOutsideBoundsShouldThrowException(){
         Board SUT = new Board(6,6);
         Ship ship = new Ship(ShipType.BATTLESHIP,3);
-        assertThrows(IllegalArgumentException.class, ()->{
-           SUT.placeShip(ship, -1, -1, Orientation.HORIZONTAL);
-        });
+        assertThrows(IllegalArgumentException.class, ()-> SUT.placeShip(ship, -1, -1, Orientation.HORIZONTAL));
     }
     @Test
     public void shootAtShipShouldReturnShipId(){
         Board SUT = new Board(6,6);
         Ship ship = new Ship(ShipType.BATTLESHIP,3);
-        SUT.placeShip(ship, 0,1, Orientation.HORIZONTAL);
-        assertEquals(ShipType.BATTLESHIP, SUT.shoot(1,1));
+        SUT.placeShip(ship, 1, 0, Orientation.HORIZONTAL);
+        assertEquals(ShipType.BATTLESHIP, SUT.shoot(1, 1));
     }
 }

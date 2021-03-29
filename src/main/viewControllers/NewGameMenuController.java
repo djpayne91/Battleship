@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 import main.model.Board;
 import main.model.GameRules;
@@ -15,6 +16,7 @@ import java.io.IOException;
 
 public class NewGameMenuController {
 
+    public ToggleGroup gameMode;
     private Stage primaryStage;
 
     @FXML
@@ -22,9 +24,6 @@ public class NewGameMenuController {
 
     @FXML
     private RadioButton standardMode;
-
-    public NewGameMenuController() {
-    }
 
     /**
      * Setter for primary stage.
@@ -44,7 +43,7 @@ public class NewGameMenuController {
             return;
         }
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/res/fxml/GameScreen.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/res/fxml/PlaceShipsScreen.fxml"));
             Parent root = loader.load();
             GameRules rules;
             if (standardMode.isSelected()) {
@@ -53,13 +52,14 @@ public class NewGameMenuController {
                 System.err.println("Error getting game rules");
                 return;
             }
-            GameScreenController controller = loader.getController();
+            PlaceShipsScreenController controller = loader.getController();
             controller.setPrimaryStage(primaryStage);
             controller.setGameRules(rules);
-            controller.setPlayers(new Player(rules.getShipList(), new Board(10, 10)), new Player(rules.getShipList(), new Board(10, 10)));
+            // I'd like this to be cleaner, but for now we initialize the first player.
+            controller.setPlayer(new Player(rules.getShipList(), new Board(10, 10)));
             primaryStage.setScene(new Scene(root));
         } catch (IOException e) {
-            System.err.println("Unable to load game screen");
+            System.err.println("Unable to load ship placement screen.");
             e.printStackTrace();
         }
     }

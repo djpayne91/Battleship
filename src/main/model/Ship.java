@@ -5,8 +5,8 @@ package main.model;
  */
 public class Ship implements Cloneable{
 
-    private ShipType id;
-    private int length;
+    private final ShipType id;
+    private final int length;
     private int HP;
 
     /**
@@ -59,8 +59,6 @@ public class Ship implements Cloneable{
 
     /**
      * Returns a new copy of this ship.
-     * @return
-     * @throws CloneNotSupportedException
      */
     @Override
     public Object clone() throws CloneNotSupportedException {

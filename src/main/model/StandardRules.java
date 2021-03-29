@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class StandardRules implements GameRules {
 
-    List<Ship> ships = new ArrayList<Ship>(Arrays.asList(
+    final List<Ship> ships = new ArrayList<>(Arrays.asList(
             new Ship(ShipType.CARRIER, 5),
             new Ship(ShipType.BATTLESHIP, 4),
             new Ship(ShipType.CRUISER, 3),
