@@ -1,11 +1,11 @@
-package main;
+package main.model;
 
+import main.model.GameRules;
 import main.model.Ship;
 import main.model.ShipType;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 /**
