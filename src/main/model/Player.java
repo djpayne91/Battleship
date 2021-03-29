@@ -34,22 +34,6 @@ public class Player {
         return ships;
     }
 
-
-    /**
-     * Returns reference to specific ship that matches the given id.
-     *
-     * @param shipId Id of ship to find.
-     * @return Ship that matches given ID.
-     */
-    public Ship getShip(ShipType shipId) {
-        for (Ship ship : ships) {
-            if (ship.getId() == shipId) {
-                return ship;
-            }
-        }
-        throw new RuntimeException("Unable to find ship");
-    }
-
     /**
      * Returns Player's game board
      * @return Player's game board
@@ -72,8 +56,7 @@ public class Player {
      * @return Number of remaining ships.
      */
     public int getShipsAlive(){
-        // TODO
-        return 0;
+        return (int) ships.stream().filter(ship -> !ship.isSunk()).count();
     }
 
 }

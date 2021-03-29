@@ -20,24 +20,9 @@ public class StandardRules implements GameRules {
             new Ship(ShipType.SUBMARINE, 3),
             new Ship(ShipType.DESTROYER, 2)));
 
-
-
-    private int nextPlayer;
-
-    public StandardRules(){
-        nextPlayer = PLAYER_TWO;
-    }
-
     @Override
-    public boolean getShouldViewUpdate() {
-        return true;
-    }
-
-    @Override
-    public int getNextPlayer() {
-        int ret = nextPlayer;
-        nextPlayer = nextPlayer == PLAYER_ONE? PLAYER_TWO : PLAYER_ONE;
-        return ret;
+    public int getShotsPerTurn(Player player) {
+        return 1;
     }
 
     @Override

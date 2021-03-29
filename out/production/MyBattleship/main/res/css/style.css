@@ -27,9 +27,21 @@
     -fx-vgap: 10px;
 }
 
+.gridSquare {
+    -fx-background-color: white;
+}
+
 .shipGrid {
     -fx-background-color: black;
     -fx-vgap: 1px;
     -fx-hgap: 1px;
     -fx-padding: 1px;
+}
+
+.gridSquare-hit{
+    -fx-background-color: #0ab9ff;
+}
+
+.gridSquare-miss{
+    -fx-background-color: #ff6400;
 }

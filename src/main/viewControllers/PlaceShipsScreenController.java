@@ -39,8 +39,6 @@ public class PlaceShipsScreenController {
     @FXML
     private VBox shipList;
     @FXML
-    private Text messageText;
-    @FXML
     private Button nextButton;
 
     private final ToggleGroup shipButtons = new ToggleGroup();
@@ -176,7 +174,19 @@ public class PlaceShipsScreenController {
      * Load and display game screen.
      */
     private void startGame(){
-
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/res/fxml/GameScreen.fxml"));
+            Parent root = loader.load();
+            GameScreenController controller = loader.getController();
+            controller.setGame(game);
+            controller.setRules(gameRules);
+            controller.setPrimaryStage(primaryStage);
+            controller.postInit();
+            primaryStage.setScene(new Scene(root));
+        } catch (IOException e) {
+            System.err.println("Unable to load game screen.");
+            e.printStackTrace();
+        }
     }
 
     /**
