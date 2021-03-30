@@ -104,20 +104,8 @@ public class GameScreenController {
                 final int row = j;
                 final int col = i;
                 // set up event listeners on Panes. Player Two's grid will shoot at player one and vice versa
-                playerOnePane.setOnMouseClicked(event -> {
-                    if (!turnOver.getValue()) {
-                        addShot(new Shot(row, col, playerTwo.getBoard().shoot(row, col), playerOnePane, playerTwo));
-                        nextShot();
-                        playerOnePane.setOnMouseClicked(null);
-                    }
-                });
-                playerTwoPane.setOnMouseClicked(event -> {
-                    if (!turnOver.getValue()) {
-                        addShot(new Shot(row, col, playerOne.getBoard().shoot(row, col), playerTwoPane, playerOne));
-                        nextShot();
-                        playerTwoPane.setOnMouseClicked(null);
-                    }
-                });
+                playerOnePane.setOnMouseClicked(event -> takeShot(row, col, playerOnePane, playerTwo));
+                playerTwoPane.setOnMouseClicked(event -> takeShot(row, col, playerTwoPane, playerOne));
                 shotsLeftProperty.setValue(rules.getShotsPerTurn(playerOne));
                 SimpleStringProperty shotsLeftStringProperty = new SimpleStringProperty("Shots left: ");
                 shotsLeftLabel.textProperty().bind(shotsLeftStringProperty.concat(shotsLeftProperty));
@@ -188,6 +176,15 @@ public class GameScreenController {
             gameMessageText.setText("");
         }
     }
+
+    private void takeShot(int row, int col, Pane pane, Player player){
+        if (!turnOver.getValue()) {
+            addShot(new Shot(row, col, player.getBoard().shoot(row, col), pane, player));
+            nextShot();
+            pane.setOnMouseClicked(null);
+        }
+    }
+
 
     @FXML
     public void nextPlayer() {
