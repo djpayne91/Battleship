@@ -106,14 +106,14 @@ public class GameScreenController {
                 // set up event listeners on Panes. Player Two's grid will shoot at player one and vice versa
                 playerOnePane.setOnMouseClicked(event -> {
                     if (!turnOver.getValue()) {
-                        shots.add(new Shot(row, col, playerTwo.getBoard().shoot(row, col), playerOnePane, playerTwo));
+                        addShot(new Shot(row, col, playerTwo.getBoard().shoot(row, col), playerOnePane, playerTwo));
                         nextShot();
                         playerOnePane.setOnMouseClicked(null);
                     }
                 });
                 playerTwoPane.setOnMouseClicked(event -> {
                     if (!turnOver.getValue()) {
-                        shots.add(new Shot(row, col, playerOne.getBoard().shoot(row, col), playerTwoPane, playerOne));
+                        addShot(new Shot(row, col, playerOne.getBoard().shoot(row, col), playerTwoPane, playerOne));
                         nextShot();
                         playerTwoPane.setOnMouseClicked(null);
                     }
@@ -129,6 +129,11 @@ public class GameScreenController {
         nextTurnButton.disableProperty().bind(turnOver.not());
     }
 
+    private void addShot(Shot shot) {
+        this.shots.add(shot);
+        shot.pane.getStyleClass().set(0,"gridSquare-shot");
+    }
+
     /**
      * Update game state after shot.
      */
@@ -142,7 +147,6 @@ public class GameScreenController {
             }
         }
     }
-
     /**
      * Show game over screen. Pass in winner.
      */

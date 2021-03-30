@@ -32,10 +32,12 @@ public class Board {
         }
     }
 
+    /**
+     * Public default constructor. Will create a new board with the default width and height.
+     */
     public Board(){
         this(DEFAULT_WIDTH, DEFAULT_HEIGHT);
     }
-
 
     /**
      * Takes shot at specified column and row. Returns <code>Board.EMPTY_SQUARE</code> if no ship is present at that location.
@@ -90,7 +92,12 @@ public class Board {
     }
 
     /**
-     * Private helper function to check ship will fit in location with orientation.
+     * Check if placement of the given ship at the given row and column with the provided orientation is valid.
+     * @param ship ship to check placement of
+     * @param row row to place ship at
+     * @param col column to place ship at
+     * @param orientation orientation of ship
+     * @return whether or not placement of the ship will be valid.
      */
     public boolean placementIsValid(Ship ship, int row, int col, Orientation orientation) {
         int length = ship.getLength();

@@ -7,10 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
-import main.model.Board;
-import main.model.GameRules;
-import main.model.Player;
-import main.model.StandardRules;
+import main.model.*;
 
 import java.io.IOException;
 
@@ -38,19 +35,16 @@ public class NewGameMenuController {
      * Event handler for button to start the new game.
      */
     public void showGameScreen() {
-        if (salvoMode.isSelected()) {
-            System.err.println("Salvo Mode is not yet implemented.");
-            return;
-        }
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/res/fxml/PlaceShipsScreen.fxml"));
             Parent root = loader.load();
             GameRules rules;
             if (standardMode.isSelected()) {
                 rules = new StandardRules();
+            } else if (salvoMode.isSelected()) {
+                rules = new SalvoRules();
             } else {
-                System.err.println("Error getting game rules");
-                return;
+                throw new RuntimeException("Error in game mode selection");
             }
             PlaceShipsScreenController controller = loader.getController();
             controller.setPrimaryStage(primaryStage);

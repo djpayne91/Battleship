@@ -4,10 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * Class modeling the standard ruleset. Players take turns taking shots and the result is shown after each shot.
- */
-public class StandardRules implements GameRules {
+public class SalvoRules implements GameRules {
 
     final List<Ship> ships = new ArrayList<>(Arrays.asList(
             new Ship(ShipType.CARRIER, 5),
@@ -18,7 +15,7 @@ public class StandardRules implements GameRules {
 
     @Override
     public int getShotsPerTurn(Player player) {
-        return 1;
+        return player.getShipsAlive();
     }
 
     @Override

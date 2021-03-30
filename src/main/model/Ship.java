@@ -34,13 +34,6 @@ public class Ship implements Cloneable{
     public int getLength() {
         return length;
     }
-    /**
-     * Public getter for this ship's remaining hit points(HP).
-     * @return HP
-     */
-    public int getHP() {
-        return HP;
-    }
 
     /**
      * Hit this ship. Decreases HP by 1;

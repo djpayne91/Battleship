@@ -48,6 +48,10 @@
     -fx-background-color: #ff6400;
 }
 
+.gridSquare-shot {
+    -fx-background-color: #787878;
+}
+
 .gameMessage .text {
     -fx-stroke: #5c0003;
     -fx-fill: white;

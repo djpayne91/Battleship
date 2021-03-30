@@ -1,7 +1,5 @@
 package main.model;
 
-import main.model.Ship;
-
 import java.util.List;
 
 public interface GameRules {

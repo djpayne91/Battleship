@@ -91,6 +91,13 @@ public class PlaceShipsScreenController {
      */
     public void setIsPlayerTwo(boolean isLastPlayer) {
         this.isPlayerTwo = isLastPlayer;
+        instructions.setText(
+                "Placing ships: " + (isPlayerTwo ? "Player Two" : "Player One") + "\n" +
+                        "Each player must place all of their ships on the board. \n" +
+                        "Make sure the other player is looking away.\n" +
+                        "You must place all of your ships.\n"
+
+        );
     }
 
     /**
@@ -99,13 +106,6 @@ public class PlaceShipsScreenController {
     @FXML
     public void initialize() {
         // write instructions
-        instructions.setText(
-                "Placing ships: " + (isPlayerTwo ? "Player Two" : "Player One") + "\n" +
-                        "Each player must place all of their ships on the board. \n" +
-                        "Make sure the other player is looking away.\n" +
-                        "You must place all of your ships.\n"
-
-        );
         // initialize squares with white background in gridpane. keep refs for easy access.
         shipPanes = new Pane[10][10];
         for (int i = 0; i < 10; i++) {

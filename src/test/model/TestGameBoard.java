@@ -59,8 +59,16 @@ public class TestGameBoard {
     @Test
     public void shootAtShipShouldReturnShipId(){
         Board SUT = new Board(6,6);
-        Ship ship = new Ship(ShipType.BATTLESHIP,3);
+        Ship ship = new Ship(ShipType.BATTLESHIP,4);
         SUT.placeShip(ship, 1, 0, Orientation.HORIZONTAL);
+        assertEquals(ShipType.BATTLESHIP, SUT.shoot(1, 1));
+    }
+
+    @Test
+    public void shootAtShipVerticalShouldReturnShipId(){
+        Board SUT = new Board();
+        Ship ship = new Ship(ShipType.BATTLESHIP,4);
+        SUT.placeShip(ship, 1, 1, Orientation.VERTICAL);
         assertEquals(ShipType.BATTLESHIP, SUT.shoot(1, 1));
     }
 }
