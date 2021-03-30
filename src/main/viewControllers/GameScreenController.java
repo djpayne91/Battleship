@@ -1,6 +1,9 @@
 package main.viewControllers;
 
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -36,12 +39,12 @@ public class GameScreenController {
     private BattleshipGame game;
     private GameRules rules;
     private List<Shot> shots = new ArrayList<>();
-    private int shotsThisTurn = 0;
     private Player playerOne;
     private Player playerTwo;
     private Player currentPlayer;
     private Stage primaryStage;
     private SimpleBooleanProperty turnOver = new SimpleBooleanProperty(false);
+    private SimpleIntegerProperty shotsLeftProperty = new SimpleIntegerProperty(1);
 
     /**
      * Public setter for the game to play.
@@ -110,6 +113,9 @@ public class GameScreenController {
                         playerTwoPane.setOnMouseClicked(null);
                     }
                 });
+                shotsLeftProperty.setValue(rules.getShotsPerTurn(playerOne));
+                SimpleStringProperty shotsLeftStringProperty = new SimpleStringProperty("Shots left: ");
+                shotsLeftLabel.textProperty().bind(shotsLeftStringProperty.concat(shotsLeftProperty));
                 playerOneGrid.add(playerOnePane, col, row);
                 playerTwoGrid.add(playerTwoPane, col, row);
             }
@@ -121,8 +127,8 @@ public class GameScreenController {
      * Update game state after shot.
      */
     private void nextShot() {
-        shotsThisTurn++;
-        turnOver.setValue(shotsThisTurn == rules.getShotsPerTurn(currentPlayer));
+        shotsLeftProperty.set(shotsLeftProperty.getValue()-1);
+        turnOver.setValue(shotsLeftProperty.getValue() == 0);
         if (turnOver.getValue()) {
             showShots();
             Player winner = game.getWinner();
@@ -155,7 +161,6 @@ public class GameScreenController {
     @FXML
     public void nextPlayer() {
         turnOver.setValue(false);
-        shotsThisTurn = 0;
         if (currentPlayer.equals(playerOne)) {
             playerOneView.setVisible(false);
             playerTwoView.setVisible(true);
@@ -165,6 +170,7 @@ public class GameScreenController {
             playerTwoView.setVisible(false);
             currentPlayer = playerOne;
         }
+        shotsLeftProperty.set(rules.getShotsPerTurn(currentPlayer));
     }
 
     private static class Shot {

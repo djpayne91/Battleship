@@ -94,7 +94,12 @@
                   </VBox>
                </children>
             </AnchorPane>
-            <Button fx:id="nextTurnButton" mnemonicParsing="false" onAction="#nextPlayer" styleClass="menuButton" text="Next Turn" />
+            <FlowPane alignment="CENTER">
+               <children>
+                  <Label fx:id="shotsLeftLabel" />
+                  <Button fx:id="nextTurnButton" mnemonicParsing="false" onAction="#nextPlayer" styleClass="menuButton" text="Next Turn" />
+               </children>
+            </FlowPane>
          </children>
       </VBox>
    </children>
