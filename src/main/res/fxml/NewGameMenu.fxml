@@ -5,7 +5,7 @@
 <?import javafx.scene.text.Text?>
 <?import java.net.URL?>
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
-      prefWidth="600.0" styleClass="menuBox" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+      prefWidth="600.0" styleClass="menuBox, rootElement" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="main.viewControllers.NewGameMenuController">
     <stylesheets>
         <URL value="@../css/style.css"/>

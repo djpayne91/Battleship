@@ -4,9 +4,12 @@
     -fx-pref-width: 200px;
 }
 
+.rootElement {
+    -fx-background-color: #52bdff;
+}
+
 .menuBox {
     -fx-alignment: center;
-    -fx-background-color: #5fa6ff;
 }
 
 .titleText {
@@ -19,12 +22,6 @@
     -fx-font-family: Stencil;
     -fx-font-size: 16pt;
     -fx-pref-width: 200px;
-}
-
-.gameScreenGridsBox {
-    -fx-padding: 15px;
-    -fx-background-color: #5fa6ff;
-    -fx-vgap: 10px;
 }
 
 .gridSquare {

@@ -1,10 +1,9 @@
 package main.viewControllers;
 
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -29,6 +28,10 @@ public class GameScreenController {
     private VBox playerTwoView;
     @FXML
     private Button nextTurnButton;
+    @FXML
+    private Label instructions;
+    @FXML
+    private Label shotsLeftLabel;
 
     private BattleshipGame game;
     private GameRules rules;
@@ -62,6 +65,21 @@ public class GameScreenController {
      */
     public void setRules(GameRules rules) {
         this.rules = rules;
+    }
+
+    /**
+     * Framework method. Called after dependency injection.
+     */
+    public void initialize() {
+        instructions.setText(
+            "Instructions: \n" +
+            "Each player has a certain number \n" +
+            "of shots determined by game type. \n" +
+            "Players take turns taking shots \n" +
+            "at each other's board until one \n" +
+            "player has sunk all of the other's \n" +
+            "ships."
+        );
     }
 
     /**
@@ -108,7 +126,7 @@ public class GameScreenController {
         if (turnOver.getValue()) {
             showShots();
             Player winner = game.getWinner();
-            if(winner != null){
+            if (winner != null) {
                 showGameOverScreen(winner);
             }
         }
@@ -118,7 +136,7 @@ public class GameScreenController {
      * Show game over screen. Pass in winner.
      */
     private void showGameOverScreen(Player winner) {
-        
+
     }
 
     /**
@@ -138,7 +156,7 @@ public class GameScreenController {
     public void nextPlayer() {
         turnOver.setValue(false);
         shotsThisTurn = 0;
-        if(currentPlayer.equals(playerOne)){
+        if (currentPlayer.equals(playerOne)) {
             playerOneView.setVisible(false);
             playerTwoView.setVisible(true);
             currentPlayer = playerTwo;
