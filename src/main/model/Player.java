@@ -2,6 +2,7 @@ package main.model;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 
 /**
@@ -61,10 +62,16 @@ public class Player {
 
     /**
      * Take shot at ship. If its empty, ignore input. Else hit that ship.
+     * @return whether or not the ship got sunk by the shot
      */
-    public void hitShip(ShipType shipType){
+    public boolean hitShip(ShipType shipType){
+        AtomicBoolean isSunk = new AtomicBoolean(false);
         if(shipType != ShipType.EMPTY_SQUARE)
-        ships.stream().filter(ship -> ship.getId() == shipType).findFirst().ifPresent(Ship::hit);
+        ships.stream().filter(ship -> ship.getId() == shipType).findFirst().ifPresent(ship -> {
+            ship.hit();
+            isSunk.set(ship.isSunk());
+        });
+        return isSunk.get();
     }
 
 

@@ -1,6 +1,11 @@
 .menuButton {
     -fx-font-family: Stencil;
     -fx-font-size: 16pt;
+}
+
+.menuBox .menuButton {
+    -fx-font-family: Stencil;
+    -fx-font-size: 16pt;
     -fx-pref-width: 200px;
 }
 
@@ -41,4 +46,17 @@
 
 .gridSquare-hit {
     -fx-background-color: #ff6400;
+}
+
+.gameMessage .text {
+    -fx-stroke: #5c0003;
+    -fx-fill: white;
+}
+
+/* In the version of java i'm using, text within a label gets a subclass called 'text'
+    Its a weirdly invisible property, so i include font size in the outer selector in case
+    java changes this later. It will just be black, but that's better than black and tiny.
+*/
+.gameMessage {
+    -fx-font-size: 16pt;
 }

@@ -10,7 +10,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 import main.model.*;
@@ -25,9 +24,9 @@ import java.util.Stack;
  * Controller for view where player places ships.
  */
 public class PlaceShipsScreenController {
-
-    @FXML
-    private VBox root;
+    private final ToggleGroup shipButtons = new ToggleGroup();
+    private final List<ToggleButton> ships = new ArrayList<>();
+    private final Stack<Pair<Pane, Color>> needToReset = new Stack<>();
     @FXML
     private GridPane shipGrid;
     @FXML
@@ -40,12 +39,10 @@ public class PlaceShipsScreenController {
     private VBox shipList;
     @FXML
     private Button nextButton;
-
-    private final ToggleGroup shipButtons = new ToggleGroup();
-    private final List<ToggleButton> ships = new ArrayList<>();
+    @FXML
+    private Label instructions;
     private Player player;
     private Pane[][] shipPanes;
-    private final Stack<Pair<Pane, Color>> needToReset = new Stack<>();
     private Orientation orientation = Orientation.VERTICAL;
     private Stage primaryStage;
     private GameRules gameRules;
@@ -101,6 +98,14 @@ public class PlaceShipsScreenController {
      */
     @FXML
     public void initialize() {
+        // write instructions
+        instructions.setText(
+                "Placing ships: " + (isPlayerTwo ? "Player Two" : "Player One") + "\n" +
+                        "Each player must place all of their ships on the board. \n" +
+                        "Make sure the other player is looking away.\n" +
+                        "You must place all of your ships.\n"
+
+        );
         // initialize squares with white background in gridpane. keep refs for easy access.
         shipPanes = new Pane[10][10];
         for (int i = 0; i < 10; i++) {
@@ -119,7 +124,6 @@ public class PlaceShipsScreenController {
                 shipPanes[i][j] = pane;
             }
         }
-
     }
 
     /**
@@ -128,7 +132,7 @@ public class PlaceShipsScreenController {
 
     @FXML
     public void nextButton(ActionEvent event) {
-        if(!isPlayerTwo){
+        if (!isPlayerTwo) {
             game = new BattleshipGame();
             game.setPlayerOne(player);
             goToNextPlayer();
@@ -153,8 +157,8 @@ public class PlaceShipsScreenController {
     /**
      * Load and display the next ship placement scene for player 2.
      */
-    private void goToNextPlayer(){
-        try{
+    private void goToNextPlayer() {
+        try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/res/fxml/PlaceShipsScreen.fxml"));
             Parent root = loader.load();
             PlaceShipsScreenController controller = loader.getController();
@@ -173,8 +177,8 @@ public class PlaceShipsScreenController {
     /**
      * Load and display game screen.
      */
-    private void startGame(){
-        try{
+    private void startGame() {
+        try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/res/fxml/GameScreen.fxml"));
             Parent root = loader.load();
             GameScreenController controller = loader.getController();
@@ -199,13 +203,13 @@ public class PlaceShipsScreenController {
         switch (orientation) {
             case VERTICAL: {
                 for (int i = 0; i < ship.getLength(); i++) {
-                    changePaneColor(panes[row+i][column], Color.BLUE);
+                    changePaneColor(panes[row + i][column], Color.BLUE);
                 }
                 break;
             }
             case HORIZONTAL: {
                 for (int i = 0; i < ship.getLength(); i++) {
-                    changePaneColor(panes[row][column+i], Color.BLUE);
+                    changePaneColor(panes[row][column + i], Color.BLUE);
                 }
                 break;
             }
@@ -236,13 +240,13 @@ public class PlaceShipsScreenController {
         pane.setBackground(new Background(new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY)));
     }
 
-    private void disableShipButton(Ship ship){
+    private void disableShipButton(Ship ship) {
         // disable placed ship
         int index = player.getShips().indexOf(ship);
         ships.get(index).setDisable(true);
         // select new ship
-        for(int i = 0; i < ships.size(); i++){
-            if(!ships.get(i).isDisabled()){
+        for (int i = 0; i < ships.size(); i++) {
+            if (!ships.get(i).isDisabled()) {
                 ships.get(i).setSelected(true);
                 currentShip = player.getShips().get(i);
                 return;
@@ -252,8 +256,8 @@ public class PlaceShipsScreenController {
         prepareForNextScene();
     }
 
-    private void prepareForNextScene(){
-        for(Node pane : shipGrid.getChildren()){
+    private void prepareForNextScene() {
+        for (Node pane : shipGrid.getChildren()) {
             pane.setOnMouseEntered(null);
             pane.setOnMouseClicked(null);
         }
@@ -304,9 +308,9 @@ public class PlaceShipsScreenController {
                     numSquares = ship.getLength();
                 }
                 for (int i = 0; i < numSquares; i++) {
-                    Color oldColor = (Color) panes[row][col+i].getBackground().getFills().get(0).getFill();
-                    needToReset.push(new Pair<>(panes[row][col+i], oldColor));
-                    changePaneColor(panes[row][col+i], color);
+                    Color oldColor = (Color) panes[row][col + i].getBackground().getFills().get(0).getFill();
+                    needToReset.push(new Pair<>(panes[row][col + i], oldColor));
+                    changePaneColor(panes[row][col + i], color);
                 }
                 break;
             }

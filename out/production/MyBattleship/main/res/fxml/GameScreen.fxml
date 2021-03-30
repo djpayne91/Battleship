@@ -18,6 +18,7 @@
       <TextFlow prefHeight="200.0" prefWidth="200.0">
          <children>
             <Label fx:id="instructions" styleClass="gameInstructions" />
+            <Label fx:id="gameMessageText" styleClass="gameMessage" />
          </children>
       </TextFlow>
       <VBox styleClass="menuBox">

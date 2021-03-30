@@ -1,10 +1,12 @@
 package main.viewControllers;
 
-import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
@@ -16,6 +18,7 @@ import main.model.GameRules;
 import main.model.Player;
 import main.model.ShipType;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +38,8 @@ public class GameScreenController {
     private Label instructions;
     @FXML
     private Label shotsLeftLabel;
+    @FXML
+    private Label gameMessageText;
 
     private BattleshipGame game;
     private GameRules rules;
@@ -75,13 +80,13 @@ public class GameScreenController {
      */
     public void initialize() {
         instructions.setText(
-            "Instructions: \n" +
-            "Each player has a certain number \n" +
-            "of shots determined by game type. \n" +
-            "Players take turns taking shots \n" +
-            "at each other's board until one \n" +
-            "player has sunk all of the other's \n" +
-            "ships."
+                "Instructions: \n" +
+                        "Each player has a certain number \n" +
+                        "of shots determined by game type. \n" +
+                        "Players take turns taking shots \n" +
+                        "at each other's board until one \n" +
+                        "player has sunk all of the other's \n" +
+                        "ships."
         );
     }
 
@@ -116,6 +121,7 @@ public class GameScreenController {
                 shotsLeftProperty.setValue(rules.getShotsPerTurn(playerOne));
                 SimpleStringProperty shotsLeftStringProperty = new SimpleStringProperty("Shots left: ");
                 shotsLeftLabel.textProperty().bind(shotsLeftStringProperty.concat(shotsLeftProperty));
+                turnOver.bind(shotsLeftProperty.isEqualTo(0));
                 playerOneGrid.add(playerOnePane, col, row);
                 playerTwoGrid.add(playerTwoPane, col, row);
             }
@@ -127,8 +133,7 @@ public class GameScreenController {
      * Update game state after shot.
      */
     private void nextShot() {
-        shotsLeftProperty.set(shotsLeftProperty.getValue()-1);
-        turnOver.setValue(shotsLeftProperty.getValue() == 0);
+        shotsLeftProperty.set(shotsLeftProperty.getValue() - 1);
         if (turnOver.getValue()) {
             showShots();
             Player winner = game.getWinner();
@@ -142,7 +147,17 @@ public class GameScreenController {
      * Show game over screen. Pass in winner.
      */
     private void showGameOverScreen(Player winner) {
-
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/res/fxml/GameOverScreen.fxml"));
+            Parent root = loader.load();
+            GameOverScreenController controller = loader.getController();
+            controller.setWinner(winner.equals(playerOne) ? "Player One" : "Player Two");
+            controller.setPrimaryStage(primaryStage);
+            primaryStage.setScene(new Scene(root));
+        } catch (IOException e) {
+            System.err.println("Unable to load game over screen.");
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -150,17 +165,29 @@ public class GameScreenController {
      */
     private void showShots() {
         // edit style of shot panes
+        int sunkShips = 0;
         for (Shot s : shots) {
             s.pane.getStyleClass().set(0, (s.hit == ShipType.EMPTY_SQUARE ? "gridSquare-miss" : "gridSquare-hit"));
-            s.player.hitShip(s.hit);
+            if(s.player.hitShip(s.hit)){
+                sunkShips++;
+            }
         }
+        setShipSunkText(sunkShips);
         // test for win
         shots.clear();
     }
 
+    private void setShipSunkText(int sunkShips) {
+        if(sunkShips > 0){
+            gameMessageText.setText("You sunk " + sunkShips + (sunkShips == 1 ? " ship" : " ships."));
+        } else {
+            gameMessageText.setText("");
+        }
+    }
+
     @FXML
     public void nextPlayer() {
-        turnOver.setValue(false);
+        setShipSunkText(0);
         if (currentPlayer.equals(playerOne)) {
             playerOneView.setVisible(false);
             playerTwoView.setVisible(true);

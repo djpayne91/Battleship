@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.VBox?>
+<?import java.net.URL?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-alignment: center;" styleClass="rootElement" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.viewControllers.GameOverScreenController">
+    <stylesheets>
+        <URL value="@../css/style.css" />
+    </stylesheets>
+   <children>
+       <Label fx:id="winnerLabel" styleClass="titleText" text="Winner" />
+       <Button mnemonicParsing="false" onAction="#showMainMenu" styleClass="menuButton" text="Main Menu" />
+   </children>
+</VBox>

@@ -1,6 +1,11 @@
 .menuButton {
     -fx-font-family: Stencil;
     -fx-font-size: 16pt;
+}
+
+.menuBox .menuButton {
+    -fx-font-family: Stencil;
+    -fx-font-size: 16pt;
     -fx-pref-width: 200px;
 }
 
@@ -41,4 +46,10 @@
 
 .gridSquare-hit {
     -fx-background-color: #ff6400;
+}
+
+.gameMessage .text {
+    -fx-stroke: #5c0003;
+    -fx-font-size: 16pt;
+    -fx-fill: white;
 }
