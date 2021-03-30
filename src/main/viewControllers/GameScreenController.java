@@ -3,6 +3,7 @@ package main.viewControllers;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -79,14 +80,14 @@ public class GameScreenController {
                 // set up event listeners on Panes. Player Two's grid will shoot at player one and vice versa
                 playerOnePane.setOnMouseClicked(event -> {
                     if (!turnOver.getValue()) {
-                        shots.add(new Shot(col, row, playerTwo.getBoard().shoot(col, row), playerOnePane));
+                        shots.add(new Shot(row, col, playerTwo.getBoard().shoot(row, col), playerOnePane, playerTwo));
                         nextShot();
                         playerOnePane.setOnMouseClicked(null);
                     }
                 });
                 playerTwoPane.setOnMouseClicked(event -> {
                     if (!turnOver.getValue()) {
-                        shots.add(new Shot(col, row, playerOne.getBoard().shoot(col, row), playerTwoPane));
+                        shots.add(new Shot(row, col, playerOne.getBoard().shoot(row, col), playerTwoPane, playerOne));
                         nextShot();
                         playerTwoPane.setOnMouseClicked(null);
                     }
@@ -106,7 +107,18 @@ public class GameScreenController {
         turnOver.setValue(shotsThisTurn == rules.getShotsPerTurn(currentPlayer));
         if (turnOver.getValue()) {
             showShots();
+            Player winner = game.getWinner();
+            if(winner != null){
+                showGameOverScreen(winner);
+            }
         }
+    }
+
+    /**
+     * Show game over screen. Pass in winner.
+     */
+    private void showGameOverScreen(Player winner) {
+        
     }
 
     /**
@@ -116,12 +128,14 @@ public class GameScreenController {
         // edit style of shot panes
         for (Shot s : shots) {
             s.pane.getStyleClass().set(0, (s.hit == ShipType.EMPTY_SQUARE ? "gridSquare-miss" : "gridSquare-hit"));
+            s.player.hitShip(s.hit);
         }
+        // test for win
         shots.clear();
     }
 
     @FXML
-    public void nextPlayer(ActionEvent event) {
+    public void nextPlayer() {
         turnOver.setValue(false);
         shotsThisTurn = 0;
         if(currentPlayer.equals(playerOne)){
@@ -141,12 +155,14 @@ public class GameScreenController {
         int col;
         ShipType hit;
         Pane pane;
+        Player player;
 
-        Shot(int row, int col, ShipType hit, Pane pane) {
+        Shot(int row, int col, ShipType hit, Pane pane, Player player) {
             this.row = row;
             this.col = col;
             this.hit = hit;
             this.pane = pane;
+            this.player = player;
         }
 
         @Override

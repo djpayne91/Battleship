@@ -12,7 +12,7 @@
 
 <VBox fx:id="root" styleClass="menuBox" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.viewControllers.GameScreenController">
    <children>
-      <Pane>
+      <AnchorPane>
          <children>
             <VBox fx:id="playerOneView" styleClass="menuBox">
                <children>
@@ -48,9 +48,9 @@
                   </GridPane>
                </children>
             </VBox>
-            <VBox fx:id="playerTwoView" layoutX="10.0" layoutY="10.0" visible="false">
+            <VBox fx:id="playerTwoView" visible="false">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Shooting Now: Player Two" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="menuItem" text="Shooting Now: Player Two" />
                   <GridPane fx:id="playerTwoGrid" prefHeight="400.0" prefWidth="400.0" style="-fx-background-color: black; -fx-vgap: 1; -fx-hgap: 1; -fx-padding: 1;" styleClass="shipGrid">
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -83,7 +83,7 @@
                </children>
             </VBox>
          </children>
-      </Pane>
+      </AnchorPane>
       <Button fx:id="nextTurnButton" mnemonicParsing="false" onAction="#nextPlayer" styleClass="menuButton" text="Next Turn" />
    </children>
    <stylesheets>

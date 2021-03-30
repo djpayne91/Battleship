@@ -38,10 +38,10 @@
     -fx-padding: 1px;
 }
 
-.gridSquare-hit{
+.gridSquare-miss{
     -fx-background-color: #0ab9ff;
 }
 
-.gridSquare-miss{
+.gridSquare-hit {
     -fx-background-color: #ff6400;
 }

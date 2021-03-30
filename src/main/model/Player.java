@@ -48,7 +48,7 @@ public class Player {
      * @return <code>true</code> if all ships have been destroyed, <code>false</code> if any ships are still alive
      */
     public boolean isFleetDestroyed() {
-        return getShipsAlive() > 0;
+        return getShipsAlive() == 0;
     }
 
     /**
@@ -58,5 +58,14 @@ public class Player {
     public int getShipsAlive(){
         return (int) ships.stream().filter(ship -> !ship.isSunk()).count();
     }
+
+    /**
+     * Take shot at ship. If its empty, ignore input. Else hit that ship.
+     */
+    public void hitShip(ShipType shipType){
+        if(shipType != ShipType.EMPTY_SQUARE)
+        ships.stream().filter(ship -> ship.getId() == shipType).findFirst().ifPresent(Ship::hit);
+    }
+
 
 }
