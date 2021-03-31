@@ -13,7 +13,8 @@ public class TestBattleshipGame {
         // TODO
     }
 
-    @Test void testGetWinnerShouldReturnPlayerIfOtherHasNoShips(){
+    @Test
+    public void testGetWinnerShouldReturnPlayerIfOtherHasNoShips(){
         // TODO
     }
 
