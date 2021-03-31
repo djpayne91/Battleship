@@ -12,6 +12,16 @@ import main.model.*;
 import java.io.IOException;
 
 public class NewGameMenuController {
+    /*
+    If your name is not Dustin Payne and you're reading this... I accidentally left my notes in. Its almost 11PM now and
+    I need to get ready for bed. I have the game fully implemented and pushed to the repo, but i've been implementing an AI
+    player for the last few hours and i'm almost done.
+    I need to ...
+        1) add options to set AI player(s) in the new game menu
+        2) add AI ship placement
+        3) do a lot more documenting and unit testing and making sure this is ready to go.
+        4) stop pranking myself so hard with crap like 1-3 all in one day.
+     */
 
     public ToggleGroup gameMode;
     private Stage primaryStage;

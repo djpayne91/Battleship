@@ -13,10 +13,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import main.model.BattleshipGame;
-import main.model.GameRules;
-import main.model.Player;
-import main.model.ShipType;
+import javafx.util.Pair;
+import main.model.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -50,6 +48,9 @@ public class GameScreenController {
     private Stage primaryStage;
     private SimpleBooleanProperty turnOver = new SimpleBooleanProperty(false);
     private SimpleIntegerProperty shotsLeftProperty = new SimpleIntegerProperty(1);
+    private Pane[][] playerOnePanes;
+    private Pane[][] playerTwoPanes;
+
 
     /**
      * Public setter for the game to play.
@@ -88,6 +89,8 @@ public class GameScreenController {
                         "player has sunk all of the other's \n" +
                         "ships."
         );
+        playerOnePanes = new Pane[10][10];
+        playerTwoPanes = new Pane[10][10];
     }
 
     /**
@@ -104,8 +107,12 @@ public class GameScreenController {
                 final int row = j;
                 final int col = i;
                 // set up event listeners on Panes. Player Two's grid will shoot at player one and vice versa
-                playerOnePane.setOnMouseClicked(event -> takeShot(row, col, playerOnePane, playerTwo));
-                playerTwoPane.setOnMouseClicked(event -> takeShot(row, col, playerTwoPane, playerOne));
+                if (!(playerOne instanceof AIPlayer)) // if player is AI, it won't need the mouse controls.
+                    playerOnePane.setOnMouseClicked(event -> takeShot(row, col, playerOnePanes, playerTwo));
+                if (!(playerTwo instanceof AIPlayer))
+                    playerTwoPane.setOnMouseClicked(event -> takeShot(row, col, playerTwoPanes, playerOne));
+                playerOnePanes[row][col] = playerOnePane;
+                playerTwoPanes[row][col] = playerTwoPane;
                 shotsLeftProperty.setValue(rules.getShotsPerTurn(playerOne));
                 SimpleStringProperty shotsLeftStringProperty = new SimpleStringProperty("Shots left: ");
                 shotsLeftLabel.textProperty().bind(shotsLeftStringProperty.concat(shotsLeftProperty));
@@ -119,7 +126,7 @@ public class GameScreenController {
 
     private void addShot(Shot shot) {
         this.shots.add(shot);
-        shot.pane.getStyleClass().set(0,"gridSquare-shot");
+        shot.pane.getStyleClass().set(0, "gridSquare-shot");
     }
 
     /**
@@ -135,6 +142,7 @@ public class GameScreenController {
             }
         }
     }
+
     /**
      * Show game over screen. Pass in winner.
      */
@@ -159,10 +167,16 @@ public class GameScreenController {
         // edit style of shot panes
         int sunkShips = 0;
         for (Shot s : shots) {
+            if (currentPlayer instanceof AIPlayer) {
+                ((AIPlayer) currentPlayer).informHit(s.row, s.col, s.hit != ShipType.EMPTY_SQUARE);
+            }
             s.pane.getStyleClass().set(0, (s.hit == ShipType.EMPTY_SQUARE ? "gridSquare-miss" : "gridSquare-hit"));
-            if(s.player.hitShip(s.hit)){
+            if (s.player.hitShip(s.hit)) {
                 sunkShips++;
             }
+        }
+        if (sunkShips > 0 && currentPlayer instanceof AIPlayer) {
+            ((AIPlayer) currentPlayer).notifyShipSunk();
         }
         setShipSunkText(sunkShips);
         // test for win
@@ -170,18 +184,18 @@ public class GameScreenController {
     }
 
     private void setShipSunkText(int sunkShips) {
-        if(sunkShips > 0){
+        if (sunkShips > 0) {
             gameMessageText.setText("You sunk " + sunkShips + (sunkShips == 1 ? " ship" : " ships."));
         } else {
             gameMessageText.setText("");
         }
     }
 
-    private void takeShot(int row, int col, Pane pane, Player player){
+    private void takeShot(int row, int col, Pane[][] panes, Player player) {
         if (!turnOver.getValue()) {
-            addShot(new Shot(row, col, player.getBoard().shoot(row, col), pane, player));
+            addShot(new Shot(row, col, player.getBoard().shoot(row, col), panes[row][col], player));
             nextShot();
-            pane.setOnMouseClicked(null);
+            panes[row][col].setOnMouseClicked(null);
         }
     }
 
@@ -199,6 +213,16 @@ public class GameScreenController {
             currentPlayer = playerOne;
         }
         shotsLeftProperty.set(rules.getShotsPerTurn(currentPlayer));
+        if (currentPlayer instanceof AIPlayer) {
+            while (shotsLeftProperty.getValue() > 0) {
+                Pair<Integer, Integer> nextAIShot = ((AIPlayer) currentPlayer).getNextShot();
+                if (currentPlayer == playerTwo) {
+                    takeShot(nextAIShot.getKey(), nextAIShot.getValue(), playerTwoPanes, playerOne);
+                } else {
+                    takeShot(nextAIShot.getKey(), nextAIShot.getValue(), playerOnePanes, playerTwo);
+                }
+            }
+        }
     }
 
     private static class Shot {

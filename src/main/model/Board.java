@@ -119,6 +119,23 @@ public class Board {
     }
 
     /**
+     * public getter for width of board
+     * @return width of board
+     */
+
+    public int getWidth(){
+        return ships[0].length;
+    }
+
+    /**
+     * public getter for height of board
+     * @return height of board
+     */
+    public int getHeight(){
+        return ships.length;
+    }
+
+    /**
      * Helper method to determine if a ship placed at the given square at the given orientation will intersect another ship
      */
     private boolean doesNotIntersect(Ship ship, int row, int col, Orientation orientation){
