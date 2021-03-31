@@ -86,7 +86,9 @@ public class GameScreenController {
                         "Players take turns taking shots \n" +
                         "at each other's board until one \n" +
                         "player has sunk all of the other's \n" +
-                        "ships."
+                        "ships. Shots that appear orange \n" +
+                        "represent enemy ships. Blue shots \n" +
+                        "are misses."
         );
     }
 
