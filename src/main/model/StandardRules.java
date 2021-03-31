@@ -7,31 +7,11 @@ import java.util.List;
 /**
  * Class modeling the standard ruleset. Players take turns taking shots and the result is shown after each shot.
  */
-public class StandardRules implements GameRules {
-
-    final List<Ship> ships = new ArrayList<>(Arrays.asList(
-            new Ship(ShipType.CARRIER, 5),
-            new Ship(ShipType.BATTLESHIP, 4),
-            new Ship(ShipType.CRUISER, 3),
-            new Ship(ShipType.SUBMARINE, 3),
-            new Ship(ShipType.DESTROYER, 2)));
+public class StandardRules extends GameRules {
 
     @Override
     public int getShotsPerTurn(Player player) {
         return 1;
     }
 
-    @Override
-    public List<Ship> getShipList() {
-        try {
-            ArrayList<Ship> out = new ArrayList<>();
-            for (Ship s : ships) {
-                out.add((Ship) s.clone());
-            }
-            return out;
-        } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e.getMessage());
-        }
-    }
 }
