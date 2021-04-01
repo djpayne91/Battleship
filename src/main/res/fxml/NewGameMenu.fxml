@@ -20,7 +20,6 @@
            </columnConstraints>
            <rowConstraints>
                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
            </rowConstraints>
           <children>
               <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0" styleClass="menuItem" GridPane.columnIndex="1">
@@ -34,7 +33,6 @@
                  </children>
               </HBox>
               <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="menuItem" text="Game Mode" />
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="menuItem" text="Text" GridPane.rowIndex="1" />
           </children>
        </GridPane>
        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
