@@ -30,7 +30,7 @@
                   <RadioButton fx:id="horizToggle" mnemonicParsing="false" onAction="#switchOrientation" text="Vertical" toggleGroup="$orientationGroup" />
                </children>
             </VBox>
-            <GridPane fx:id="shipGrid" prefHeight="400.0" prefWidth="400.0" style="-fx-background-color: black; -fx-vgap: 1; -fx-hgap: 1; -fx-padding: 1;" styleClass="shipGrid">
+            <GridPane fx:id="shipGrid" maxHeight="400.0" maxWidth="400.0" minHeight="400.0" minWidth="400.0" prefHeight="400.0" prefWidth="400.0" style="-fx-background-color: black; -fx-vgap: 1; -fx-hgap: 1; -fx-padding: 1;" styleClass="shipGrid">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -59,8 +59,11 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
             </GridPane>
-            <Label fx:id="instructions" />
+            <Label maxWidth="275.0" styleClass="instructionText" text="Each player must place all of their ships. The orientation of the ship can be changed with the radio buttons on the left." wrapText="true" />
          </children>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
       </HBox>
       <HBox style="-fx-alignment: center;">
          <children>

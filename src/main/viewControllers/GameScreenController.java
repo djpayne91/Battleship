@@ -35,8 +35,6 @@ public class GameScreenController {
     @FXML
     private Button nextTurnButton;
     @FXML
-    private Label instructions;
-    @FXML
     private Label shotsLeftLabel;
     @FXML
     private Label gameMessageText;
@@ -73,23 +71,6 @@ public class GameScreenController {
      */
     public void setRules(GameRules rules) {
         this.rules = rules;
-    }
-
-    /**
-     * Framework method. Called after dependency injection.
-     */
-    public void initialize() {
-        instructions.setText(
-                "Instructions: \n" +
-                        "Each player has a certain number \n" +
-                        "of shots determined by game type. \n" +
-                        "Players take turns taking shots \n" +
-                        "at each other's board until one \n" +
-                        "player has sunk all of the other's \n" +
-                        "ships. Shots that appear orange \n" +
-                        "represent enemy ships. Blue shots \n" +
-                        "are misses."
-        );
     }
 
     /**

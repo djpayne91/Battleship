@@ -15,15 +15,15 @@
       <URL value="@../css/style.css" />
    </stylesheets>
    <children>
-      <TextFlow prefHeight="200.0" prefWidth="200.0">
+      <VBox>
          <children>
-            <Label fx:id="instructions" styleClass="gameInstructions" />
+            <Label styleClass="instructionText" text="Instructions:&#10;Players take turns shooting&#10;at eachother's ships. The number&#10;of shots is determined by game mode.&#10;Shots will appear gray until all shots&#10;have been taken. Blue squares represent&#10;misses. Orange squares are hits.&#10;If you sink a ship, the game will announce it." />
             <Label fx:id="gameMessageText" styleClass="gameMessage" />
          </children>
          <padding>
-            <Insets bottom="10.0" top="10.0" />
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </padding>
-      </TextFlow>
+      </VBox>
       <VBox styleClass="menuBox">
          <children>
             <AnchorPane>

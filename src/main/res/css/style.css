@@ -53,7 +53,7 @@
 }
 
 .gameMessage .text {
-    -fx-stroke: #5c0003;
+    -fx-stroke: #400003;
     -fx-fill: white;
 }
 
@@ -63,4 +63,8 @@
 */
 .gameMessage {
     -fx-font-size: 16pt;
+}
+
+.instructionText .text {
+    -fx-font-size: 14pt;
 }

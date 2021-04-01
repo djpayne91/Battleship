@@ -39,8 +39,6 @@ public class PlaceShipsScreenController {
     private VBox shipList;
     @FXML
     private Button nextButton;
-    @FXML
-    private Label instructions;
     private Player player;
     private Pane[][] shipPanes;
     private Orientation orientation = Orientation.VERTICAL;
@@ -91,13 +89,6 @@ public class PlaceShipsScreenController {
      */
     public void setIsPlayerTwo(boolean isLastPlayer) {
         this.isPlayerTwo = isLastPlayer;
-        instructions.setText(
-                "Placing ships: " + (isPlayerTwo ? "Player Two" : "Player One") + "\n" +
-                        "Each player must place all of their ships on the board. \n" +
-                        "Make sure the other player is looking away.\n" +
-                        "You must place all of your ships.\n"
-
-        );
     }
 
     /**
